@@ -25,9 +25,9 @@ double gas_payment(double volume) {
         return 0.0;
     }
     double rate = 0.0;
-    if (volume < 208) {
+    if (volume <= 208) {
         rate = 1.299;
-    } else if (volume >= 208 && volume <= 500) {
+    } else if (volume > 208 && volume <= 500) {
         rate = 1.788;
     } else {
         rate = 3.645;
@@ -114,13 +114,42 @@ void shoes(float sizes)
     }
 }
 
-int binary_count(unsigned int N, bool count_zeros) {
-    int count = 0;
-    while (N > 0) {
-        if ((N & 1) == (count_zeros ? 0 : 1)) {
-            count++;
-        }
-        N >>= 1;
+int binary_count(int N) {
+    if (N < 0 || N > 21359010) {
+        cout << "Число виходить за межі допустимого діапазону (0 - 21359010)" << endl;
+        return 1;
     }
-    return count;
+
+    string binary = "";
+    int temp = N;
+    while (temp > 0) {
+        binary = (temp % 2 == 0 ? "0" : "1") + binary;
+        temp /= 2;
+    }
+
+    while (binary.length() < 12) {
+        binary = "0" + binary;
+    }
+
+    int ones = 0, zeros = 0;
+    for (char bit : binary) {
+        if (bit == '1') {
+            ones++;
+        } else {
+            zeros++;
+        }
+    }
+
+    if (binary.length() < 12) {
+        cout << "Недостатньо бітів" << endl;
+        return 1;
+    }
+
+    if (binary[binary.length() - 12] == '0') {
+        cout << "Кількість двійкових нулів: " << zeros << endl;
+    } else {
+        cout << "Сума двійкових одиниць: " << ones << endl;
+    }
+
+    return 0;
 }
