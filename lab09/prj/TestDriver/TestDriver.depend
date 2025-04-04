@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1743756153 source:q:\kovalova-yeva-kn24\lab09\prj\testdriver\main.cpp
+1743756626 source:q:\kovalova-yeva-kn24\lab09\prj\testdriver\main.cpp
 	<iostream>
 	<windows.h>
 	"ModulesKovalova.h"
 
-1743753995 q:\kovalova-yeva-kn24\lab08\prj\moduleskovalova.h
+1743756551 q:\kovalova-yeva-kn24\lab08\prj\moduleskovalova.h
 
