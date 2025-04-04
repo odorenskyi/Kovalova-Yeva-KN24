@@ -5,6 +5,10 @@
 
 using namespace std;
 
+void developer_information() {
+    std::cout << "Ковальова Єва ©, Усі права захищені." << std::endl;
+}
+
 void task_selector(char option) {
     while (true) {
         if (option == 'u') {
@@ -56,6 +60,7 @@ int main()
 {
     SetConsoleOutputCP(65001);
     SetConsoleCP(65001);
+    developer_information();
     char option;
     std::cout << "Введіть опцію (u, t, r, e): ";
     std::cin >> option;
