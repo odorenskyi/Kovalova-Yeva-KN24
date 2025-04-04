@@ -2,7 +2,8 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
-#include "ModulesKovalova.h"
+
+using namespace std;
 
 double s_calculation(double x, double y, double z) {
 
