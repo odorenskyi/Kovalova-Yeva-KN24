@@ -2,6 +2,11 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <cctype>
+#include <ctime>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -152,4 +157,130 @@ int binary_count(int N) {
     }
 
     return 0;
+}
+//10.1
+void analyze_text_file(const string& input_file, const string& output_file) {
+    ifstream infile(input_file);
+    ofstream outfile(output_file);
+
+    if (!infile.is_open() || !outfile.is_open()) {
+        cerr << "Не вдалося відкрити файл." << endl;
+        return;
+    }
+
+    // Авторська інформація
+    outfile << "Автор: Єва Ковальова\n";
+    outfile << "Установа: ЦНТУ\n";
+    outfile << "Місто: Кропивницький\n";
+    outfile << "Країна: Україна\n";
+    outfile << "Рік розробки: 2025\n\n";
+
+    string line;
+    int paragraph_count = 0;
+    bool in_paragraph = false;
+    int ukraine_count = 0, university_count = 0, notebook_count = 0;
+
+    while (getline(infile, line)) {
+        // Підрахунок абзаців
+        if (!line.empty()) {
+            if (!in_paragraph) {
+                paragraph_count++;
+                in_paragraph = true;
+            }
+        } else {
+            in_paragraph = false;
+        }
+
+        // Переведення рядка в нижній регістр для пошуку слів
+        locale loc(""); // Використання локалі за замовчуванням системи
+        string lower_line;
+        for (char c : line) {
+            lower_line += tolower(c, loc);
+        }
+
+        // Пошук слів
+        size_t pos = 0;
+        while ((pos = lower_line.find("україна", pos)) != string::npos) {
+            ukraine_count++;
+            pos += string("україна").length();
+        }
+        pos = 0;
+        while ((pos = lower_line.find("університет", pos)) != string::npos) {
+            university_count++;
+            pos += string("університет").length();
+        }
+        pos = 0;
+        while ((pos = lower_line.find("блокнот", pos)) != string::npos) {
+            notebook_count++;
+            pos += string("блокнот").length();
+        }
+    }
+
+    // Запис результатів у вихідний файл
+    outfile << "Кількість абзаців: " << paragraph_count << "\n";
+    outfile << "Слово 'Україна' зустрічається: " << ukraine_count << " разів\n";
+    outfile << "Слово 'університет' зустрічається: " << university_count << " разів\n";
+    outfile << "Слово 'блокнот' зустрічається: " << notebook_count << " разів\n";
+
+    infile.close();
+    outfile.close();
+}
+
+// 10.2
+void append_punctuation_and_timestamp(const string& input_file) {
+    ifstream infile(input_file, ios::in);
+    ofstream outfile(input_file, ios::app);
+
+    if (!infile.is_open() || !outfile.is_open()) {
+        cerr << "Не вдалося відкрити файл." << endl;
+        return;
+    }
+
+    int punctuation_count = 0;
+    char ch;
+
+    // Підрахунок знаків пунктуації
+    while (infile.get(ch)) {
+        if (ispunct(ch)) {
+            punctuation_count++;
+        }
+    }
+
+    // Отримання поточної дати й часу
+    time_t now = time(0);
+    tm* local_time = localtime(&now);
+    char timestamp[100];
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", local_time);
+
+    // Додавання інформації у файл
+    outfile << "\nКількість знаків пунктуації: " << punctuation_count << "\n";
+    outfile << "Дата й час дозапису: " << timestamp << "\n";
+
+    infile.close();
+    outfile.close();
+}
+
+// 10.3
+void append_results_to_file(const string& output_file, double x, double y, double z, int b) {
+    ofstream outfile(output_file, ios::app);
+
+    if (!outfile.is_open()) {
+        cerr << "Не вдалося відкрити файл." << endl;
+        return;
+    }
+
+    // Результат виконання функції s_calculation
+    double s_result = s_calculation(x, y, z);
+    outfile << "Результат s_calculation(" << x << ", " << y << ", " << z << "): " << s_result << "\n";
+
+    // Число b у двійковому коді
+    string binary = "";
+    int temp = b;
+    while (temp > 0) {
+        binary = (temp % 2 == 0 ? "0" : "1") + binary;
+        temp /= 2;
+    }
+    outfile << "Число " << b << " у двійковому коді: " << binary << "\n";
+
+    outfile.close();
 }

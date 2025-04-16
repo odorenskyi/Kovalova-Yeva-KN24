@@ -1,9 +1,13 @@
 # depslib dependency file v1.0
-1743755228 source:q:\kovalova-yeva-kn24\lab08\prj\moduleskovalova\main.cpp
+1744819324 source:q:\kovalova-yeva-kn24\lab08\prj\moduleskovalova\main.cpp
 	<cmath>
 	<cstdlib>
 	<string>
 	<iostream>
+	<fstream>
+	<cctype>
+	<ctime>
+	<algorithm>
 
 1741947315 q:\kovalova-yeva-kn24\lab08\prj\\moduleskovalova.h
 
